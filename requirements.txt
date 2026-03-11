@@ -1,0 +1,24 @@
+# narrative-playlist-agent — requirements.txt
+
+# LLM
+openai>=1.0.0          # Compatible con Groq, OpenAI y Anthropic
+
+# Data
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Validation
+pydantic>=2.0.0
+scipy>=1.11.0          # Regresión lineal para validate_arc_slope
+
+# Config
+python-dotenv>=1.0.0
+
+# CLI / Output
+rich>=13.0.0
+
+# Testing
+pytest>=7.0.0
+
+# Frontend (v2)
+streamlit>=1.30.0
