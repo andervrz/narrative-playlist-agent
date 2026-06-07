@@ -20,7 +20,7 @@ from rich import box
 # Añadir src al path para imports
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from src.agent.agent import NarrativePlaylistAgent
+from src.agents.agent import NarrativePlaylistAgent
 
 console = Console()
 

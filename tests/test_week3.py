@@ -17,14 +17,14 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from src.agent.system_prompt import SYSTEM_PROMPT
-from src.agent.output_tools import (
+from src.agents.system_prompt import SYSTEM_PROMPT
+from src.agents.output_tools import (
     generate_playlist_file,
     _slugify,
     _flatten_tracks,
     _compute_arc_statistics,
 )
-from src.agent.db_tools import (
+from src.agents.db_tools import (
     add_track_to_database,
     check_track_exists,
     get_user_added_tracks,
@@ -218,7 +218,7 @@ class TestGeneratePlaylistFile:
 
     def test_generates_csv_and_json(self, tmp_path):
         phases = make_sample_phases()
-        with patch("src.agent.output_tools.OUTPUT_DIR", tmp_path):
+        with patch("src.agents.output_tools.OUTPUT_DIR", tmp_path):
             result_str = generate_playlist_file({
                 "playlist_title": "Test Playlist",
                 "playlist_description": "Arco de prueba",
@@ -235,7 +235,7 @@ class TestGeneratePlaylistFile:
 
     def test_csv_has_correct_headers(self, tmp_path):
         phases = make_sample_phases()
-        with patch("src.agent.output_tools.OUTPUT_DIR", tmp_path):
+        with patch("src.agents.output_tools.OUTPUT_DIR", tmp_path):
             result_str = generate_playlist_file({
                 "playlist_title": "CSV Test",
                 "playlist_description": "Test",
@@ -251,7 +251,7 @@ class TestGeneratePlaylistFile:
 
     def test_csv_track_count(self, tmp_path):
         phases = make_sample_phases(n_tracks_per_phase=3)
-        with patch("src.agent.output_tools.OUTPUT_DIR", tmp_path):
+        with patch("src.agents.output_tools.OUTPUT_DIR", tmp_path):
             result_str = generate_playlist_file({
                 "playlist_title": "Count Test",
                 "playlist_description": "Test",
@@ -265,7 +265,7 @@ class TestGeneratePlaylistFile:
     def test_json_contains_arc_summary(self, tmp_path):
         phases = make_sample_phases()
         arc_summary = "Viaje emocional de melancolía a épica gloria."
-        with patch("src.agent.output_tools.OUTPUT_DIR", tmp_path):
+        with patch("src.agents.output_tools.OUTPUT_DIR", tmp_path):
             result_str = generate_playlist_file({
                 "playlist_title": "JSON Test",
                 "playlist_description": "Test",
@@ -278,7 +278,7 @@ class TestGeneratePlaylistFile:
         assert json_data["arc_summary"] == arc_summary
 
     def test_empty_phases_returns_error(self, tmp_path):
-        with patch("src.agent.output_tools.OUTPUT_DIR", tmp_path):
+        with patch("src.agents.output_tools.OUTPUT_DIR", tmp_path):
             result_str = generate_playlist_file({
                 "playlist_title": "Empty",
                 "playlist_description": "Test",
@@ -291,7 +291,7 @@ class TestGeneratePlaylistFile:
 
     def test_tunemymusic_instructions_in_result(self, tmp_path):
         phases = make_sample_phases()
-        with patch("src.agent.output_tools.OUTPUT_DIR", tmp_path):
+        with patch("src.agents.output_tools.OUTPUT_DIR", tmp_path):
             result_str = generate_playlist_file({
                 "playlist_title": "Instructions Test",
                 "playlist_description": "Test",

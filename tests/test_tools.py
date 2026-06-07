@@ -8,7 +8,7 @@ import json
 import pytest
 from pathlib import Path
 
-from src.agent.tools import (
+from src.agents.tools import (
     build_query,
     execute_query,
     relax_args,
