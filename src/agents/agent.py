@@ -25,17 +25,17 @@ from rich.live import Live
 from rich.spinner import Spinner
 from rich.text import Text
 
-from src.agent.system_prompt import SYSTEM_PROMPT
-from src.agent.tools import (
+from src.agents.system_prompt import SYSTEM_PROMPT
+from src.agents.tools import (
     query_song_database,
     check_db_ready,
     TOOL_SCHEMA,
 )
-from src.agent.output_tools import (
+from src.agents.output_tools import (
     generate_playlist_file,
     GENERATE_PLAYLIST_SCHEMA,
 )
-from src.agent.db_tools import (
+from src.agents.db_tools import (
     add_track_to_database,
     check_track_exists,
     ADD_TRACK_SCHEMA,
