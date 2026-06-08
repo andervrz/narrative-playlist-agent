@@ -1,0 +1,184 @@
+{
+  "playlist_title": "Oscura a Legendaria",
+  "playlist_description": "Un viaje desde la oscuridad hasta la leyenda",
+  "generated_at": "2026-06-08T19:16:38.707583",
+  "total_tracks": 6,
+  "phases": [
+    {
+      "emotional_description": "Oscuridad",
+      "energy_range": [
+        0.4,
+        0.7
+      ],
+      "phase_explanation": "La oscuridad es el inicio del viaje, con canciones que reflejan la tristeza y la desesperanza.",
+      "phase_label": "Oscuridad",
+      "phase_number": 1,
+      "tracks": [
+        {
+          "artist": "The Cranberries",
+          "energy": 0.517,
+          "genre": "rock",
+          "position": 1,
+          "tempo": 93.862,
+          "track_name": "Ode To My Family",
+          "transition_note": "",
+          "valence": 0.0777,
+          "phase_label": "Oscuridad"
+        },
+        {
+          "artist": "Imagine Dragons",
+          "energy": 0.637,
+          "genre": "rock",
+          "position": 2,
+          "tempo": 177.913,
+          "track_name": "Bad Liar",
+          "transition_note": "",
+          "valence": 0.0827,
+          "phase_label": "Oscuridad"
+        },
+        {
+          "artist": "Bastille",
+          "energy": 0.411,
+          "genre": "rock",
+          "position": 3,
+          "tempo": 149.911,
+          "track_name": "Hope For The Future",
+          "transition_note": "",
+          "valence": 0.109,
+          "phase_label": "Oscuridad"
+        }
+      ],
+      "valence_range": [
+        0,
+        0.3
+      ]
+    },
+    {
+      "emotional_description": "Leyenda",
+      "energy_range": [
+        0.8,
+        1
+      ],
+      "phase_explanation": "La leyenda es el final del viaje, con canciones que reflejan la esperanza y la victoria.",
+      "phase_label": "Leyenda",
+      "phase_number": 2,
+      "tracks": [
+        {
+          "artist": "Andy Grammer",
+          "energy": 0.802,
+          "genre": "rock",
+          "position": 1,
+          "tempo": 122.026,
+          "track_name": "Honey, I'm Good.",
+          "transition_note": "",
+          "valence": 0.583,
+          "phase_label": "Leyenda"
+        },
+        {
+          "artist": "The Wanted",
+          "energy": 0.851,
+          "genre": "rock",
+          "position": 2,
+          "tempo": 126.885,
+          "track_name": "Glad You Came",
+          "transition_note": "",
+          "valence": 0.452,
+          "phase_label": "Leyenda"
+        },
+        {
+          "artist": "Queen",
+          "energy": 0.805,
+          "genre": "rock",
+          "position": 3,
+          "tempo": 103.451,
+          "track_name": "Scandal - Remastered 2011",
+          "transition_note": "",
+          "valence": 0.507,
+          "phase_label": "Leyenda"
+        }
+      ],
+      "valence_range": [
+        0.4,
+        0.6
+      ]
+    }
+  ],
+  "arc_statistics": {
+    "valence_start": 0.078,
+    "valence_end": 0.507,
+    "energy_start": 0.517,
+    "energy_end": 0.805,
+    "valence_slope": "positive",
+    "energy_slope": "positive",
+    "total_tracks": 6
+  },
+  "arc_summary": "Un viaje desde la oscuridad hasta la leyenda, pasando por la lucha y la superación.",
+  "tracks_flat": [
+    {
+      "position": 1,
+      "track_name": "Ode To My Family",
+      "artist": "The Cranberries",
+      "valence": 0.0777,
+      "energy": 0.517,
+      "tempo": 93.862,
+      "genre": "rock",
+      "phase": "Oscuridad",
+      "transition_note": ""
+    },
+    {
+      "position": 1,
+      "track_name": "Honey, I'm Good.",
+      "artist": "Andy Grammer",
+      "valence": 0.583,
+      "energy": 0.802,
+      "tempo": 122.026,
+      "genre": "rock",
+      "phase": "Leyenda",
+      "transition_note": ""
+    },
+    {
+      "position": 2,
+      "track_name": "Bad Liar",
+      "artist": "Imagine Dragons",
+      "valence": 0.0827,
+      "energy": 0.637,
+      "tempo": 177.913,
+      "genre": "rock",
+      "phase": "Oscuridad",
+      "transition_note": ""
+    },
+    {
+      "position": 2,
+      "track_name": "Glad You Came",
+      "artist": "The Wanted",
+      "valence": 0.452,
+      "energy": 0.851,
+      "tempo": 126.885,
+      "genre": "rock",
+      "phase": "Leyenda",
+      "transition_note": ""
+    },
+    {
+      "position": 3,
+      "track_name": "Hope For The Future",
+      "artist": "Bastille",
+      "valence": 0.109,
+      "energy": 0.411,
+      "tempo": 149.911,
+      "genre": "rock",
+      "phase": "Oscuridad",
+      "transition_note": ""
+    },
+    {
+      "position": 3,
+      "track_name": "Scandal - Remastered 2011",
+      "artist": "Queen",
+      "valence": 0.507,
+      "energy": 0.805,
+      "tempo": 103.451,
+      "genre": "rock",
+      "phase": "Leyenda",
+      "transition_note": ""
+    }
+  ]
+}

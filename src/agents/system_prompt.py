@@ -105,6 +105,14 @@ PASO 4: Entrega el output final al usuario
 FORMATO DEL OUTPUT FINAL (texto al usuario)
 ═══════════════════════════════════════════════
 
+IMPORTANTE: lo siguiente es una PLANTILLA. Reemplaza TODO lo que
+aparezca entre corchetes [...] con valores reales (números, nombres,
+etiquetas). NUNCA dejes corchetes literales como "[N]" o "[título]"
+en tu respuesta al usuario. La sección "Archivos generados" debe usar
+los nombres de archivo REALES que retornó generate_playlist_file; si no
+llamaste a esa herramienta con éxito, NO escribas esa sección ni
+declares la playlist como generada.
+
 ✅ Playlist "[título]" generada — [N] canciones en [N] fases
 
 [Para cada fase]:

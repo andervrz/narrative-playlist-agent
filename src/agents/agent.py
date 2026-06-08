@@ -137,6 +137,7 @@ class NarrativePlaylistAgent:
         playlist_output = None
         csv_path = None
         json_path = None
+        forced_generate = False  # evita reintentar el guard en bucle infinito
 
         console.print(f"\n[bold cyan]🎵 Generando playlist...[/bold cyan]")
 
@@ -156,6 +157,24 @@ class NarrativePlaylistAgent:
 
             # Sin tool calls → el LLM terminó, emite respuesta final
             if not message.tool_calls:
+                # Guard: el modelo no puede declarar la playlist como lista
+                # si nunca llamó a generate_playlist_file (csv_path sigue None).
+                # Algunos modelos copian la plantilla de respuesta final como
+                # texto sin ejecutar el PASO 3. Lo forzamos a generarla.
+                if csv_path is None and not forced_generate:
+                    forced_generate = True
+                    messages.append(message)
+                    messages.append({
+                        "role": "user",
+                        "content": (
+                            "No has generado el archivo todavía. NO describas "
+                            "la playlist como lista: debes llamar a la "
+                            "herramienta generate_playlist_file con todas las "
+                            "fases y tracks ANTES de dar la respuesta final."
+                        )
+                    })
+                    continue
+
                 final_text = message.content or ""
                 console.print(f"\n[green]✓ Playlist completa[/green]")
                 return {

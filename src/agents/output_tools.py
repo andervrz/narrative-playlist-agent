@@ -13,6 +13,7 @@ cuando todas las fases tienen tracks asignados y validados.
 import json
 import csv
 import re
+import unicodedata
 from datetime import datetime
 from pathlib import Path
 
@@ -104,11 +105,15 @@ GENERATE_PLAYLIST_SCHEMA = {
 # ─────────────────────────────────────────────
 
 def _slugify(text: str) -> str:
-    """Convierte un título en slug para nombres de archivo."""
+    """Convierte un título en slug ASCII para nombres de archivo."""
     text = text.lower().strip()
+    # Normaliza y elimina acentos: "épica" → "epica", "canción" → "cancion"
+    text = unicodedata.normalize("NFKD", text)
+    text = text.encode("ascii", "ignore").decode("ascii")
     text = re.sub(r'[^\w\s-]', '', text)
     text = re.sub(r'[\s_-]+', '_', text)
-    return text[:50]
+    text = text.strip('_')
+    return text[:50] or "playlist"
 
 
 def _build_filename(title: str) -> str:
