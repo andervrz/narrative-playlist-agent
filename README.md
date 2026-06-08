@@ -1,50 +1,50 @@
 # narrative-playlist-agent
 
-> Traduce arcos emocionales en lenguaje natural a playlists matemáticamente validadas, exportadas en CSV para cualquier plataforma de streaming.
+> Translates emotional narratives in natural language into mathematically validated playlists, exported as CSV for any streaming platform.
 
 ---
 
 ## Demo
 
 ```
-→ "lista oscura a legendaria"
+→ "dark playlist that builds into legendary"
 
-✅ Playlist "Oscura a Legendaria" — 6 canciones en 2 fases
-📊 Arco: valence 0.077→0.583 | energy 0.517→0.805
-🎯 Coherencia: 92%
-📄 playlist_oscura_a_legendaria.csv → listo para TuneMyMusic
+✅ Playlist "Dark to Legendary" — 6 songs in 2 phases
+📊 Arc: valence 0.077→0.583 | energy 0.517→0.805
+🎯 Coherence score: 92%
+📄 playlist_dark_to_legendary.csv → ready for TuneMyMusic
 ```
 
 ---
 
-## Qué hace
+## What it does
 
-El agente recibe un prompt narrativo libre y ejecuta autónomamente:
+The agent takes a free-form narrative prompt and autonomously:
 
-1. **Descompone el arco emocional** en fases con parámetros numéricos (`valence`, `energy`, `tempo`)
-2. **Busca canciones reales** en una base de datos local de 81,000+ tracks con audio features verificados
-3. **Valida matemáticamente** el arco con regresión lineal y constraints de transición suave (Δvalence ≤ 0.3)
-4. **Genera un CSV** compatible con TuneMyMusic para publicar en Spotify, Apple Music, YouTube Music o cualquier plataforma
+1. **Decomposes the emotional arc** into phases with explicit numeric parameters (`valence`, `energy`, `tempo`)
+2. **Retrieves real songs** from a local database of 81,000+ tracks with verified audio features
+3. **Mathematically validates** the arc using linear regression and smooth transition constraints (Δvalence ≤ 0.3)
+4. **Generates a CSV** compatible with TuneMyMusic to publish on Spotify, Apple Music, YouTube Music, or any platform
 
 ---
 
-## Por qué no es un script más
+## Why this is different
 
-La mayoría de repos de "playlist AI" en GitHub hacen esto:
-
-```
-LLM inventa nombres de canciones → busca en Spotify → crea playlist
-```
-
-**El problema:** el LLM alucina tracks que no existen o con features incorrectos.
-
-Este agente hace lo contrario:
+Most "AI playlist" repos on GitHub do this:
 
 ```
-LLM traduce emoción → rangos numéricos
-SQLite retorna tracks REALES con features verificados
-Python valida el arco matemáticamente
-LLM nunca inventa ninguna canción
+LLM hallucinates song names → search on Spotify → create playlist
+```
+
+**The problem:** The LLM invents tracks that don't exist or assigns wrong audio features.
+
+This agent does the opposite:
+
+```
+LLM translates emotion → numeric ranges
+SQLite returns REAL tracks with verified audio features
+Python validates the arc mathematically
+The LLM never invents a single song
 ```
 
 ---
@@ -52,18 +52,18 @@ LLM nunca inventa ninguna canción
 ## Stack
 
 ```
-LLM:         Groq (LLaMA 3.3-70b) — via OpenAI SDK
-Base datos:  SQLite con 81,000+ tracks (Kaggle Spotify Dataset)
-Validación:  scipy.stats.linregress — Python puro, sin LLM
-Output:      CSV para TuneMyMusic + JSON con narrativa completa
-Skills:      3 SKILL.md composables (generación, ingesta, validación)
+LLM:        Groq (LLaMA 3.3-70b) — via OpenAI SDK
+Database:   SQLite with 81,000+ tracks (Kaggle Spotify Dataset)
+Validation: scipy.stats.linregress — pure Python, no LLM
+Output:     CSV for TuneMyMusic + JSON with full narrative
+Skills:     3 composable SKILL.md files (generation, ingestion, validation)
 ```
 
 ---
 
 ## Setup
 
-### 1. Clonar e instalar
+### 1. Clone and install
 
 ```bash
 git clone https://github.com/andervrz/narrative-playlist-agent
@@ -73,29 +73,29 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 2. Configurar
+### 2. Configure
 
 ```bash
 cp .env.example .env
-# Editar .env y añadir tu GROQ_API_KEY
-# Obtener gratis en: console.groq.com
+# Edit .env and add your GROQ_API_KEY
+# Get one free at: console.groq.com
 ```
 
-### 3. Preparar la base de datos
+### 3. Prepare the database
 
-Descargar el dataset:
+Download the dataset:
 - **Kaggle:** https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset
-- **HuggingFace (sin cuenta):** https://huggingface.co/datasets/maharshipandya/spotify-tracks-dataset/blob/main/dataset.csv
+- **HuggingFace (no account needed):** https://huggingface.co/datasets/maharshipandya/spotify-tracks-dataset/blob/main/dataset.csv
 
 ```bash
-# Colocar el CSV en:
+# Place the CSV here:
 data/raw/dataset.csv
 
-# Generar SQLite:
+# Generate SQLite database:
 python3 src/ingestion/load_dataset.py
 ```
 
-### 4. Correr
+### 4. Run
 
 ```bash
 python3 src/main.py
@@ -103,73 +103,74 @@ python3 src/main.py
 
 ---
 
-## Uso
+## Usage
 
 ```bash
-# Interactivo
+# Interactive mode
 python3 src/main.py
 
-# Con prompt directo
-python3 src/main.py --prompt "Playlist de 9 canciones: oscura → épica → paz"
+# Direct prompt
+python3 src/main.py --prompt "9-song playlist: dark → epic → peace"
 ```
 
-Ejemplos de prompts:
+Prompt examples:
 ```
-"De tristeza profunda a euforia pura, 8 canciones"
-"Playlist para estudiar, concentrada y tranquila"
-"Viaje emocional: melancolía → furia → aceptación"
-"Música épica para entrenar, terminar relajado"
+"From deep sadness to pure euphoria, 8 songs"
+"Focus playlist for studying, calm and concentrated"
+"Emotional journey: melancholy → rage → acceptance"
+"Epic workout music that ends with total relaxation"
+"dark to legendary"
 ```
 
 ---
 
 ## Output
 
-Por cada ejecución el agente genera dos archivos en `output/`:
+Each run generates two files in `output/`:
 
-| Archivo | Uso |
+| File | Use |
 |---|---|
-| `playlist_[titulo]_[fecha].csv` | Subir a tunemymusic.com → cualquier plataforma |
-| `playlist_[titulo]_[fecha].json` | Registro completo con narrativa, features y arco |
+| `playlist_[title]_[date].csv` | Upload to tunemymusic.com → any platform |
+| `playlist_[title]_[date].json` | Full record with narrative, audio features, arc stats |
 
-### Publicar en tu plataforma
+### Publish to your platform
 
-1. Ve a [tunemymusic.com](https://tunemymusic.com)
-2. Selecciona **File** como fuente
-3. Sube el `.csv`
-4. Elige: Spotify / Apple Music / YouTube Music / Tidal / Deezer
-5. La playlist aparece en tu cuenta
+1. Go to [tunemymusic.com](https://tunemymusic.com)
+2. Select **File** as source
+3. Upload the `.csv`
+4. Choose: Spotify / Apple Music / YouTube Music / Tidal / Deezer
+5. Playlist appears in your account
 
 ---
 
-## Arquitectura
+## Architecture
 
 ```
 src/
-├── ingestion/load_dataset.py      → CSV → SQLite con índices
-├── schemas/models.py              → Pydantic v2 (contratos de datos)
+├── ingestion/load_dataset.py       → CSV → SQLite with indexes
+├── schemas/models.py               → Pydantic v2 (data contracts)
 ├── agent/
-│   ├── tools.py                   → query_song_database + retry_logic
-│   ├── db_tools.py                → add_track_to_database
-│   ├── output_tools.py            → generate_playlist_file (CSV + JSON)
-│   ├── system_prompt.py           → instrucciones del agente
-│   └── agent.py                   → loop LLM ↔ tools (harness)
-├── validation/playlist_validator.py → validación matemática determinista
-└── main.py                        → CLI con Rich
+│   ├── tools.py                    → query_song_database + retry_logic
+│   ├── db_tools.py                 → add_track_to_database
+│   ├── output_tools.py             → generate_playlist_file (CSV + JSON)
+│   ├── system_prompt.py            → agent instructions as Python constant
+│   └── agent.py                    → LLM ↔ tools loop (harness)
+├── validation/playlist_validator.py → deterministic math validation layer
+└── main.py                         → CLI with Rich
 
 skills/
-├── playlist_generation/SKILL.md   → cuándo y cómo generar playlists
-├── track_ingestion/SKILL.md       → cómo añadir tracks al dataset
-├── arc_validation/SKILL.md        → cómo interpretar el score del arco
-└── loader.py                      → carga dinámica de skills
+├── playlist_generation/SKILL.md    → when and how to generate playlists
+├── track_ingestion/SKILL.md        → how to add tracks to the dataset
+├── arc_validation/SKILL.md         → how to interpret the arc score
+└── loader.py                       → dynamic skill loading
 ```
 
-### Principio central
+### Core principle
 
 ```
-LLM      → razona (traduce emoción a números, elige qué buscar)
-SQLite   → verdad (tracks reales con audio features verificados)
-Python   → valida (matemáticas, constraints, arco coherente)
+LLM      → reasons  (translates emotion to numbers, decides what to search)
+SQLite   → truth    (real tracks with verified audio features)
+Python   → validates (math, constraints, coherent arc)
 ```
 
 ---
@@ -178,43 +179,43 @@ Python   → valida (matemáticas, constraints, arco coherente)
 
 ```bash
 pytest tests/ -v
-# 142 tests — 0 fallos
+# 142 tests — 0 failures
 ```
 
 ---
 
-## Añadir canciones al dataset
+## Adding songs to the dataset
 
-Si una canción no está en el dataset, el agente puede añadirla:
+If a song isn't in the dataset, the agent can add it interactively:
 
 ```
-→ "Agrega 'Papaoutai' de Stromae"
+→ "Add 'Papaoutai' by Stromae"
 
-Agente: Estimé valence=0.28, energy=0.62, tempo=122. ¿Correcto?
-Tú:     Sí
-Agente: ✅ Añadida con ID track_u000001. Ya disponible para futuros arcos.
+Agent: I estimated valence=0.28, energy=0.62, tempo=122. Correct?
+You:   Yes
+Agent: ✅ Added with ID track_u000001. Available for future arcs.
 ```
 
 ---
 
-## Por qué Spotify deprecó los audio features
+## Why Spotify deprecated audio features
 
-En noviembre 2024, Spotify deprecó los endpoints `GET /audio-features` y `GET /recommendations` para nuevas apps. En febrero 2026 añadió restricciones adicionales que requieren cuenta Premium para el modo de desarrollo.
+In November 2024, Spotify deprecated the `GET /audio-features` and `GET /recommendations` endpoints for new apps. In February 2026 they added further restrictions requiring a Premium account for developer mode.
 
-Este proyecto usa el dataset de Kaggle como fuente de verdad para los audio features — lo que lo hace independiente de las APIs de streaming y más robusto que los sistemas que dependen de endpoints externos.
+This project uses the Kaggle dataset as the source of truth for audio features — making it independent of streaming APIs and more robust than systems that rely on external endpoints that can change or disappear.
 
 ---
 
 ## Roadmap
 
-- [ ] v2: Streamlit UI con visualización gráfica del arco emocional
-- [ ] v2: Feedback loop — registrar qué canciones saltas para mejorar el arco
-- [ ] v3: Integración directa con Spotify (requiere cuenta Premium)
+- [ ] v2: Streamlit UI with visual arc chart (valence/energy per track)
+- [ ] v2: Feedback loop — log skipped tracks to improve future arcs
+- [ ] v3: Direct Spotify integration (requires Premium account)
 
 ---
 
-## Autor
+## Author
 
-**Ander Vasques** — [@andervrz](https://github.com/andervrz)
+**Ander Vasquez** — [@andervrz](https://github.com/andervrz)
 
 AI Engineer — Venezuela
